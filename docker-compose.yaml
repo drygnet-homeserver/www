@@ -1,0 +1,22 @@
+version: '2'
+
+services:
+  nginx-proxy:
+    image: jwilder/nginx-proxy
+    ports:
+      - "80:80"
+    networks:
+      - home
+    volumes:
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+
+  whoami:
+    image: jwilder/whoami
+    networks:
+      - home
+    environment:
+      - VIRTUAL_HOST=whoami.local,whoami.home.dryg.net
+
+networks:
+  home:
+    external: true
